@@ -5,6 +5,7 @@ class Quiz extends React.Component {
     this.preguntaInicio = 0;
     this.i = 0;
     this.state = {
+      progreso: ['0%'] ,
       nro: 0,
       pregunta: props.cuestionario,
       respuestas: []
@@ -15,17 +16,25 @@ class Quiz extends React.Component {
     let item = {
         rpta:e.target.textContent,
         nro: this.state.nro,
-        pregunta : this.state.pregunta[this.state.nro].pregunta
+        pregunta : this.state.pregunta[this.state.nro].pregunta,
+        progreso: this.state.progreso
     };
+    let progreso = (this.incrementoPorcentaje + 20) + "%";
+    (this.incrementoPorcentaje >= 100)? this.incrementoPorcentaje = 100 : this.incrementoPorcentaje += 20;
     this.setState({
+        progreso: this.state.progreso.concat([progreso]),
         nro: this.state.nro + 1,
         pregunta: this.state.pregunta,
-        respuestas:this.state.respuestas.concat([item])
+        respuestas:this.state.respuestas.concat([item]),
     });
     console.log(item);
   }
   render () {
     let i = this.state.nro;
+   console.log( this.state.progreso[i]+"-"+i)
+    const divStyle = {
+        width: this.state.progreso[i]
+      }
     if(i < this.state.pregunta.length){
     return (
       <div className="container text-center">
@@ -35,8 +44,8 @@ class Quiz extends React.Component {
             </div>
         </div>
         <div className="cuestionario">
-        <div class="progress">
-          <div class="progress-bar w-75" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+        <div className="progress">
+            <div className="progress-bar" role="progressbar" style={divStyle} aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
         </div>
         <div className="row justify-content-xl-center ">
             <div className="col-xl-12 col-sm-12">
@@ -65,9 +74,9 @@ class Quiz extends React.Component {
                     <img src='assets/img/terminaste.gif' className='img-fluid'/>
             </div></div>
             <div className="cuestionario">
-            <div class="progress">
-          <div class="progress-bar w-75" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-        </div>
+            <div className="progress">
+                <div className="progress-bar" role="progressbar" style={divStyle} aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
             <div><h2>Tus Respuestas son: </h2></div>
             <div className="selecciona">{respuestas}</div>
             <div><button >Resolver</button></div></div></div>);
