@@ -57,7 +57,7 @@ class Quiz extends React.Component {
     }else {
         console.log(this.state);
         const respuestas = this.state.respuestas.map((element, index) => {
-            return ( <div><p>{index + 1}. {element.pregunta}:</p><p className='parrafoRespuesta'><strong> {element.rpta}</strong></p></div> )
+            return ( <div key={index}><p>{index + 1}. {element.pregunta}:</p><p className='parrafoRespuesta'><strong> {element.rpta}</strong></p></div> )
         })
         return( <div className="container text-center">
                     <div className="row justify-content-xl-center ">
